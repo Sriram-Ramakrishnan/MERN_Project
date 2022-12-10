@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Create a default.json file and add your configurations in it!
+default.json
