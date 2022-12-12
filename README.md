@@ -4,7 +4,15 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
 
 ## Description
 * Will be pushing changes whenever I work on this project
-* Will be deploying it on Vercel soon
+* Will be deploying it on Vercel soon!
+
+## Postman
+* To work with the current backend functionalities, download [Postman](https://www.postman.com)!
+* Clone the repository and run the command below:
+   ```npm install```
+* Run the server using the below command:
+   ```npm run server```
+* Copy the url generated for running the server and paste it in Postman after creating a new request! 
 
 ## Working
 * For creating a user:
