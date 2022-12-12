@@ -2,10 +2,18 @@
 const express = require("express");
 const { format } = require("express/lib/response");
 const router = express.Router();
+
+// Password Hashing module
+const bcrypt = require('bcryptjs');
+
+// JWT:
+const jwt = require('jsonwebtoken');
+const config = require('config'); //
+
 const { check, validationResult } = require("express-validator")
 
-// 
-const bcrypt = require('bcryptjs');
+
+
 // Get Avatar of the email
 const gravatar = require('gravatar');
 // Get user model
@@ -55,13 +63,24 @@ router.post('/',
             user.password = await bcrypt.hash(password,salt); // Hashes the password
             await user.save();
 
-            res.send("User registered");
+            // Return jsonwebtoken to login right after signing up
+            const payload = {
+                user: {
+                    id: user.id  // In MongoDB, we see _id, but mongoose uses abstraction so we can use id instead of _id
+                }
+            }
 
-           
+            jwt.sign(payload,
+                config.get('jwtToken'), // Add your personal JWT Secret key in default.json
+                { expiresIn: 360000 }, // Change this to 3600 during production!! 
+                (err, token)=>{
+                    if (err) throw err;
+                    return res.json({ token: token });
+                }); 
+            
         } catch (err) {
             console.log(err.message);
             res.status(500).send('Server error');
-            
         }
     }
     );
