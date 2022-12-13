@@ -4,7 +4,15 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
 
 ## Description
 * Will be pushing changes whenever I work on this project
-* Will be deploying it on Vercel soon
+* Will be deploying it on Vercel soon!
+
+## Postman
+* To work with the current backend functionalities, download [Postman](https://www.postman.com)!
+* Clone the repository and run the command below:
+   ```npm install```
+* Run the server using the below command:
+   ```npm run server```
+* Copy the url generated for running the server and paste it in Postman after creating a new request! 
 
 ## Working
 * For creating a user:
@@ -13,3 +21,7 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
     * After validation, we check for duplicate emails. 
     * We then encrypt the password using Bcrypt
     * JWT is created to log the user into the website
+* For logging in a user:
+    * Same steps as above, except instead of creating a user, we will use the data to verify whether user exists or not
+    * Bcrypt's compare() is used to compare a hashed password and a plain password to validate it.
+
