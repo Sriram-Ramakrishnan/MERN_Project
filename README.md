@@ -19,7 +19,7 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
    * Inside that file, add 
    ```json
    {
-      mongoURI : <your_MongoDB_connection_string>
+      "mongoURI" : "<your_MongoDB_connection_string>"
    }
    ```
    #### Postman
