@@ -34,3 +34,7 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
    * We find the respective profile using Profile.findOne() function
    * If there exists a profile, we need to update it, hence we call Profile.findOneAndUpdate() and then save it
    * Otherwise, we create a new profile by creating a new Profile object with above parameters
+* For fetching all user profiles / fetching one by user_id:
+   * Using the Schema class function find(), we can get all profiles which exists on the database and return it in the response
+   * As for the specific profile, we pass the user_id in the url and use findOne() function to fetch it if exists and return it in the response.
+   
