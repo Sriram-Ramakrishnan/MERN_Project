@@ -32,7 +32,7 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
 
 
 ## Working
-   ### User:
+   ### User
 * For creating a user:
     * First, a user model is created to store the user data we need
     * Then, the data is sent via a POST request. express-validator is used to check various conditions
@@ -43,7 +43,7 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
     * Same steps as above, except instead of creating a user, we will use the data to verify whether user exists or not
     * Bcrypt's compare() is used to compare a hashed password and a plain password to validate it.
 
-   ### Profile
+### Profile
 * For creating/updating a profile:
    * First, we pass the check function in the POST request
    * Then in the async arrow function, we check if there are any errors
