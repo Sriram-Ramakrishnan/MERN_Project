@@ -37,12 +37,13 @@ router.get('/me',auth,
 // @description Create/Update user's profile
 // @access      X Private X
 
-router.post('/', [
-    auth, 
+router.post('/', 
     [
-        check('status', 'Status reqd').not().isEmpty(), 
-        check('skills', 'Skills reqd').not().isEmpty()
-    ] 
+        auth, // Middleware array: Consisting of auth and validators
+        [
+            check('status', 'Status reqd').not().isEmpty(), 
+            check('skills', 'Skills reqd').not().isEmpty()
+        ] 
     ],
     async (req,res)=>{
         const errors = validationResult(req);
@@ -155,9 +156,51 @@ router.delete('/', auth,
             
         } catch (err) {
             console.error(err.message);
-            res.status(500).send("Server Error")
+            res.status(500).send("Server Error");
         }
-        
 });
+
+// @route       PUT api/profile/experience
+// @description Add Experience
+// @access      Private
+
+router.put('/experience', 
+[
+    auth, // Middleware array: Consisting of auth and validators
+    [
+        check('title', 'Title required').not().isEmpty(), 
+        check('company', 'Company is required').not().isEmpty(),
+        check('from', 'From date is required').not().isEmpty()
+    ] 
+],
+    async (req,res)=>{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){ 
+            return res.status(400).json({ errors: errors.array()});
+        }
+        // Get Data
+        const {title, company, location, from, to, current, description} = req.body;
+        const newExperience = {
+            title, // Same as title: title
+            company, 
+            location, 
+            from, 
+            to, 
+            current, 
+            description
+        }
+        try {
+            let profile = await Profile.findOne({user: req.user.id});
+            // unshift pushes to the beginning rather than the end:
+            profile.experience.unshift(newExperience);
+            await profile.save();
+            res.json(profile);
+            
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send("Server Error");
+        }
+
+    });
 
 module.exports = router;
