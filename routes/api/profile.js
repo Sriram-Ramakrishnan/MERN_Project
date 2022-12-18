@@ -229,4 +229,74 @@ router.delete('/experience/:exp_id', auth,
         }
 });
 
+// @route       PUT api/profile/education
+// @description Add education
+// @access      Private
+
+router.put('/education', 
+[
+    auth, // Middleware array: Consisting of auth and validators
+    [
+        check('school', 'School required').not().isEmpty(), 
+        check('degree', 'Degree is required').not().isEmpty(),
+        check('fieldofstudy', 'Field of study is required').not().isEmpty(),
+        check('from', 'From date is required').not().isEmpty()
+    ] 
+],
+    async (req,res)=>{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){ 
+            return res.status(400).json({ errors: errors.array()});
+        }
+        // Get Data
+        const {school, degree, fieldofstudy, from, to, current, description} = req.body;
+        const newEd = {
+            school, 
+            degree, 
+            fieldofstudy, 
+            from, 
+            to, 
+            current, 
+            description
+        }
+        try {
+            let profile = await Profile.findOne({user: req.user.id});
+            // unshift pushes to the beginning rather than the end:
+            profile.education.unshift(newEd);
+            await profile.save();
+            res.json(profile);
+            
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send("Server Error");
+        }
+
+    });
+
+
+// @route       DELETE api/profile/education/:edu_id
+// @description Delete education from profile
+// @access      Private
+
+router.delete('/education/:edu_id', auth, 
+    async (req,res)=>{
+        try {
+            const profile = await Profile.findOne({ user: req.user.id});
+
+            // Get remove index:
+            /* First, the entire array (education) has many fields,
+            We use the map function to convert it into an array of education ids
+            Then we use the indexOf(exp_id) to get the education we need to delete*/
+            const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
+
+            profile.education.splice(removeIndex,1); //splice(index,number_of_times_to_be_deleted)
+            await profile.save();
+            res.json(profile);
+            
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send("Server Error");
+        }
+});
+
 module.exports = router;
