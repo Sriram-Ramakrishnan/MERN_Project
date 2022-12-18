@@ -54,3 +54,9 @@ Hello Everyone, I'm learning the MERN stack from this Udemy course down below, c
 * For fetching all user profiles / fetching one by user_id:
    * Using the Schema class function find(), we can get all profiles which exists on the database and return it in the response
    * As for the specific profile, we pass the user_id in the url and use findOne() function to fetch it if exists and return it in the response.
+
+### Github Repositories using OAuth:
+* Create an OAuth app by going to ```https://github.com/settings/developers```
+* After creating an OAuth app, copy the client ID and client Secret from your application and add it in ```config/default.json``` {If you haven't created already do create it!}
+* Import the request and config modules using require
+* We fetch the repositories by using the request function and pass in the options we need
